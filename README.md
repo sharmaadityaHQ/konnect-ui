@@ -1,4 +1,10 @@
-# README
+# KONNECT-UI
+
+API service catalog UI
+
+## Demo video
+
+[Click here to view a quick demo of KONNECT-UI](https://www.loom.com/share/f675a9cfa4764284ad0fe9b3930c8036)
 
 ## Setup
 
@@ -90,3 +96,7 @@ The Vite dev server proxies `/api` requests to the backend server.
 - Follows Vue 3 best practices (composables, computed properties, proper typing)
 - CSS Grid for responsive card layout
 - IntersectionObserver for efficient infinite scroll (no scroll listeners)
+
+## Build on my local
+
+![Local build](./local_build.png)
