@@ -53,6 +53,7 @@ The Vite dev server proxies `/api` requests to the backend server.
 - **Desktop (≥768px)**: Traditional pagination with URL params (`page`, `q`) for bookmarking and navigation
 - **Mobile (<768px)**: Infinite scroll using IntersectionObserver for better touch UX
 - **Rationale**: Optimizes UX per form factor while maintaining URL state for desktop users
+- **Sticky Pagination**: Pagination controls are fixed at the bottom of the viewport to avoid layout shift when items on a page are fewer than the page size
 
 ### Client-Side Processing
 
@@ -86,9 +87,14 @@ The Vite dev server proxies `/api` requests to the backend server.
 
 ### Trade-offs
 
-- **Client-side vs Server-side**: Chose client-side for simplicity and instant UX, at the cost of scalability
+- **Client-side vs Server-side**: Chose client-side pagination for simplicity and instant UX, at the cost of scalability
 - **Hybrid pagination**: More complex codebase but better UX per device type
 - **Type transformation**: Frontend handles transformation instead of backend, keeping API generic
+
+## Scope of improvement
+
+- Increase test coverage for components and composables
+- Explore Vue concepts in depth to understand improvement areas in code
 
 ## Notes
 

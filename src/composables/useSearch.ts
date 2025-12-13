@@ -24,6 +24,14 @@ export function useSearch() {
     router.replace({ query })
   })
 
+  // Sync searchQuery when route changes (e.g., browser back/forward navigation)
+  watch(() => route.query.q, (newQuery) => {
+    const queryValue = (newQuery as string) || ''
+    if (searchQuery.value !== queryValue) {
+      searchQuery.value = queryValue
+    }
+  })
+
   const clearSearch = () => {
     searchQuery.value = ''
   }
