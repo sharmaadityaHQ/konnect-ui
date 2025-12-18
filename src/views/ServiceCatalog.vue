@@ -202,8 +202,14 @@ const { searchQuery } = useSearch()
 
 const { services, loading, error, refetch } = useServices(searchQuery)
 
+const isFirstActivation = ref(true)
+
 // Refetch data when component becomes active again (navigating back from versions page)
 onActivated(() => {
+  if (isFirstActivation.value) {
+    isFirstActivation.value = false
+    return
+  }
   refetch()
 })
 
