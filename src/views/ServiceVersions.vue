@@ -23,7 +23,7 @@
       </div>
 
       <!-- Versions List -->
-      <template v-else-if="serviceData">
+      <template v-else-if="apiServiceData">
         <div class="versions-header">
           <h2 class="versions-title">
             Versions ({{ versions.length }})
@@ -44,7 +44,7 @@
           class="versions-list"
         >
           <VersionCard
-            v-for="version in enrichedVersions"
+            v-for="version in versions"
             :key="version.id"
             :version="version"
           />
@@ -55,11 +55,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
-import type { ApiService, Version } from '@/types/service'
-import { transformService } from '@/utils/transformService'
+import type { ApiService } from '@/types/service'
 import VersionCard from '@/components/VersionCard.vue'
 import CatalogHeader from '@/components/CatalogHeader.vue'
 
@@ -79,35 +78,19 @@ if (routerApiService) {
   console.log('ℹ️ No router state - will fetch from API')
 }
 
-// Compute transformed service data
-const serviceData = computed(() => {
-  if (apiServiceData.value) {
-    return transformService(apiServiceData.value)
-  }
-  return null
-})
-
-// Get versions array
-const versions = computed<Version[]>(() => {
-  if (apiServiceData.value) {
-    return apiServiceData.value.versions
-  }
-  return []
-})
-
-// Enrich versions with serviceType for VersionCard component
-const enrichedVersions = computed(() => {
-  if (!serviceData.value) {
+// Get versions array enriched with serviceType for VersionCard component
+const versions = computed(() => {
+  if (!apiServiceData.value) {
     return []
   }
-  return versions.value.map(version => ({
+  return apiServiceData.value.versions.map(version => ({
     ...version,
-    serviceType: serviceData.value!.type,
+    serviceType: apiServiceData.value!.type,
   }))
 })
 
-// Always fetch fresh data on mount (silent refresh if we have cached data)
-onMounted(async () => {
+// Always fetch fresh data (silent refresh if we have cached data)
+const fetchServiceData = async () => {
   try {
     // Only show loading spinner if we don't have cached data
     if (!apiServiceData.value) {
@@ -135,7 +118,9 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
+
+fetchServiceData()
 </script>
 
 <style lang="scss" scoped>
