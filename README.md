@@ -106,3 +106,7 @@ The Vite dev server proxies `/api` requests to the backend server.
 ## Build on my local
 
 ![Local build](./local_build.png)
+
+## Credits
+
+Credits to konnect-team for providing awesome open source starter code to build on top of.
